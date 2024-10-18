@@ -6,29 +6,26 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const [user, setUser] = useState(null);
+    const [userDetails, setUserDetails] = useState(null);
     const [error, setError] = useState(null);    
     const [loading, setLoading] = useState(false);
 
-    const login = (userData, token) => {
-        setLoading(true)
-        setUser(userData);
-        localStorage.setItem("user-token", token);
-        setLoading(false);
+    const login = (userData) => {
+        setUserDetails(userData);
     }
 
     const logout = () => {
-        setUser(null);
+        setUserDetails(null);
         localStorage.removeItem("user-token");
         setLoading(false);
-    }
+    }    
 
     if(loading){
         return <div>Loading Auth...</div>
     }
 
     return (
-        <AuthContext.Provider value={{user, login, logout}} >
+        <AuthContext.Provider value={{userDetails, login, logout}} >
             {children}
         </AuthContext.Provider>
     )
