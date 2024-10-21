@@ -50,8 +50,7 @@ function Login() {
       const {  email, password } = formData;
       const response = await loginUser({  email, password });
       if(response.status === 200){
-        localStorage.setItem("user-token", response.data.data.token);
-        login(response.data.data.user);
+        await login(response.data.data);
         toast.success("Logged in successfully");
         navigate("/");
       }
@@ -62,10 +61,7 @@ function Login() {
     } finally {
       setLoading(false);
     }
-  };
-
-  console.log(userDetails);
-  
+  };  
 
   return (
     <main>

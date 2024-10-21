@@ -10,6 +10,7 @@ import promanageLogo from '../assets/promanage.svg';
 import settingsLogo from '../assets/settings.svg';
 import usernameLogo from '../assets/username.svg';
 import ArtImage from '../assets/Art.png';
+import addPeopleLogo  from '../assets/database.svg';
 
 
 
@@ -28,5 +29,6 @@ export {
     settingsLogo,
     usernameLogo,
     ArtImage,
+    addPeopleLogo
 
 }
