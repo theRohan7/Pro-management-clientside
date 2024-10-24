@@ -6,7 +6,6 @@ import { TaskContext } from "../contexts/TaskContext";
 function TaskCard({ task }) {
   const { taskStatus, updateTaskChecklist } = useContext(TaskContext);
   const [collapseChecklist, setCollapseChecklist] = useState(true);
-  const [collapseAll, setCollapseAll] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
   const formateDate = (dateString) => {
@@ -46,23 +45,43 @@ function TaskCard({ task }) {
     <div className="taskcard">
       <div className="task-header">
         <div className="priority-container">
-        <div className="circle" style={{ backgroundColor: task.priority === 'High Priority' ? '#FF2473' : task.priority === 'Moderate Priority' ? '#18B0FF' : '#63C05B' }}></div>
-        <span className="task-priority">{task.priority}</span>
+          <div
+            className="circle"
+            style={{
+              backgroundColor:
+                task.priority === "High Priority"
+                  ? "#FF2473"
+                  : task.priority === "Moderate Priority"
+                  ? "#18B0FF"
+                  : "#63C05B",
+            }}
+          ></div>
+          <span className="task-priority">{task.priority}</span>
         </div>
-        <span className="more-options" onClick={() => setShowOptions(!showOptions)}><i class="ri-more-fill"></i></span>
-        <div className="task-options" style={{ display: showOptions ? 'block' : 'none' }}>
-           <button>Edit</button> <br />
-           <button>Share</button>
-           <button>Delete</button>
+        <span
+          className="more-options"
+          onClick={() => setShowOptions(!showOptions)}
+        >
+          <i class="ri-more-fill"></i>
+        </span>
+        <div
+          className="task-options"
+          style={{ display: showOptions  ? "block" : "none" }}
+        >
+          <button>Edit</button> <br />
+          <button>Share</button>
+          <button>Delete</button>
         </div>
       </div>
-      <h3 className="task-title">{task.title}</h3>
+      <h3 className="task-title">
+        {task.title.length > 25
+          ? `${task.title.substring(0, 30)}...`
+          : task.title}
+      </h3>
       <div className="checklistsHeader">
-         Checklist ({task.checklists.filter((c) => c.completed).length}/
-         {task.checklists.length})
-        <button
-          onClick={() => setCollapseChecklist(!collapseChecklist)}
-        >
+        Checklist ({task.checklists.filter((c) => c.completed).length}/
+        {task.checklists.length})
+        <button onClick={() => setCollapseChecklist(!collapseChecklist)}>
           {collapseChecklist ? (
             <i class="ri-arrow-up-s-line"></i>
           ) : (
@@ -82,7 +101,7 @@ function TaskCard({ task }) {
               checked={item.completed}
               onChange={() => toggleChecklist(task._id, idx)}
             />
-            <label >{item.title}</label>
+            <label>{item.title}</label>
           </div>
         ))}
       </div>

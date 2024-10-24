@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   promanageLogo,
   analyticsLogo,
-  collapseAll,
   layoutLogo,
   settingsLogo,
   logoutLogo,
-  addPeopleLogo
+  addPeopleLogo,
+  collapseAllLogo
 } from "../utils/export.js";
 import { AuthContext } from "../contexts/AuthContext.jsx";
 import '../CSS/Dashboard.css';
@@ -69,32 +69,42 @@ function Dashboard() {
       </div>
       <div className="dashboard">
         <div className="dashboard-header">
-            <h2>Welcome {userDetails?.name} </h2>
-            <h3>Link Copied</h3>
+          <h2>Welcome! {userDetails?.name} </h2>
+          <h3>Link Copied</h3>
         </div>
 
         <div className="dashboard-body">
-            <div className="board-header">
-                <h3>Board <img src={addPeopleLogo} alt="" /> <span>Add people</span> </h3>
-                <select value={filter}  onChange={(e) => setFilter(e.target.value)}>
-                    <option value="Today">Today</option>
-                    <option value="This Week">This Week</option>
-                    <option value="This Month">This Month</option>
-                </select>
-            </div>
-            <div className="categories-section">
-              {categories.map((category, idx) => (
-                <div key={idx} className="category">
-                  <div className="category-header"><h3>{category}</h3></div>
-                  <div className="category-body">
-                    {tasks.map((task) => task.status === category && (
-                    <TaskCard task={task} key={task._id} />
-                    ))}
+          <div className="board-header">
+            <h3>
+              Board <img src={addPeopleLogo} alt="" /> <span>Add people</span>{" "}
+            </h3>
+            <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+              <option value="Today">Today</option>
+              <option value="This Week">This Week</option>
+              <option value="This Month">This Month</option>
+            </select>
+          </div>
+          <div className="categories-section">
+            {categories.map((category, idx) => (
+              <div key={idx} className="category">
+                <div className="category-header">
+                  <h3>{category}</h3>
+                  <div className="collapse-add">
+                    {category === "Todo" && <i class="ri-add-large-line"></i>}
+                    <img src={collapseAllLogo} />
                   </div>
                 </div>
-              ))}
-                
-            </div>
+                <div className="category-body">
+                  {tasks.map(
+                    (task) =>
+                      task.status === category && (
+                        <TaskCard task={task} key={task._id} />
+                      )
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

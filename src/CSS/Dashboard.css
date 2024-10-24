@@ -37,9 +37,9 @@
     margin-right: 10px;
 }
 .logo-heading h2 {
-    font-family: 'Poppins';
-    font-size: 25px;
-    font-weight: 700;
+    font-family: 'Inter';
+    font-size: 23px;
+    font-weight: 800;
     line-height: 24px;
     text-align: center;
     color: #000000;
@@ -48,6 +48,7 @@
 .option {
     display: flex;
     align-items: center;
+    font-family: Inter;
     gap: 10px;
     padding: 10px;
     margin-bottom: 10px;
@@ -64,6 +65,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    font-family: Inter;
+    font-weight: 400;
     background-color: transparent;
     font-size: 15px;
     border: none;
@@ -88,6 +91,15 @@
     padding: 5px;
 }
 
+.dashboard-header h2 {
+    font-family: Inter;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 33px;
+    text-align: left;
+    color: #000000;
+}
+
 .date {
     color: #767575;
 }
@@ -102,25 +114,28 @@
 
 .board-header h3 {
     display: flex;
+    font-family: Inter;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 450;
 }
   
 .board-header span {
-    font-size: 0.8em;
+    font-size: 15px;
     color: #767575;
 }
 
 .dashboard-body {
-    height: calc(100vh - 120px);
-    /* overflow: hidden; */
-    
+    height: calc(100vh - 120px);    
 }
 
 select {
     padding: 5px 10px;
     border-radius: 6px;
-    border: 1px solid #ddd;
+    border: none;
+    font-family: Inter;
+    font-weight: 500;
 }
 
 .categories-section {
@@ -128,7 +143,6 @@ select {
     gap: 20px;
     height:95%;
     overflow-x: auto;
-  
 }
 
 .category {
@@ -139,6 +153,26 @@ select {
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Inter;
+}
+
+.collapse-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.collapse-add i {
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 19px;
 }
 
 .category-body {

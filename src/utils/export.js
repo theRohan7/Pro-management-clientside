@@ -2,7 +2,7 @@ import eyeView from '../assets/eye-view.svg';
 import eyeHide from '../assets/eye-hide.svg';
 import passLogo from '../assets/password.svg';
 import analyticsLogo from '../assets/analytics.svg';
-import collapseAll from '../assets/collapse-all.svg';
+import collapseAllLogo from '../assets/collapse-all.svg';
 import emailLogo from '../assets/email.svg';
 import layoutLogo from '../assets/layout.svg';
 import logoutLogo from '../assets/Logout.svg';
@@ -21,7 +21,7 @@ export {
     eyeView,
     passLogo,
     analyticsLogo,
-    collapseAll,
+    collapseAllLogo,
     emailLogo,
     layoutLogo,
     logoutLogo,
