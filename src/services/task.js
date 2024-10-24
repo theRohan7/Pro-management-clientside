@@ -48,6 +48,25 @@ const changeTaskStatus = async (status, taskId) => {
     }
 }
 
+const updateTaskChecklists = async (checklistIndex, taskId) => {
+    try {
+        const token = localStorage.getItem("user-token");
+        const response = await axios.post(`${BACKEND_URL}/tasks/task-checklist`, {
+            checklistIndex,
+            taskId
+        }, {
+            headers: {
+                "Authorization": token
+            }
+        })
+        return response;
+        
+    } catch (error) {
+        throw new Error(error.response.data.message);
+    }
+    
+}
+
 const editTask = async (task, taskId) => {
     try {
         const token = localStorage.getItem("user-token");
@@ -98,4 +117,5 @@ export {
     editTask,
     deleteTask,
     getSharedTask,
+    updateTaskChecklists
 }

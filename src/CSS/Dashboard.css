@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 }
 
 .side-nav {
@@ -9,10 +10,10 @@
     width: 18%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    /* background-color: red; */
     padding: 20px;
+    border-right: 1px solid #EDF5FE
 }
 
 .nav-options {
@@ -22,16 +23,13 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    /* background-color: green; */
-    /* padding: 20px 0; */
 }
 
 .logo-heading {
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 20px 0;
+    gap: 10px;
+    margin-bottom: 40px;
 }
 
 .logo-heading img {
@@ -48,24 +46,102 @@
     color: #000000;
 }
 
-.top-nav-option,
-.bottom-nav-option {
-    width: 100%;
+.option {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    /* background-color: blue; */
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
 }
 
-.option {
-    width: 100%;
+.option:active {
+    background-color: #17A2B8;
+    color: white;
+    border-radius: 10px;
+}
+
+.logout-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+    background-color: transparent;
+    font-size: 15px;
+    border: none;
+    color: red;
+    cursor: pointer;
 }
 
 .dashboard {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;    
     width: 85%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.date {
+    color: #767575;
+}
+
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.board-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+  
+.board-header span {
+    font-size: 0.8em;
+    color: #767575;
+}
+
+.dashboard-body {
+    height: calc(100vh - 120px);
+    overflow: hidden;
+    
+}
+
+select {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.categories-section {
+    display: flex;
+    gap: 20px;
+    height:92%;
+  
+}
+
+.category {
+    background-color: #EEF2F5;
+    border-radius: 10px;
+    padding: 20px;  
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.category-body {
+    overflow-y: auto;
+    height: calc(100% - 40px);
 }

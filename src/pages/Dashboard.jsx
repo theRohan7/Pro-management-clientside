@@ -18,7 +18,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
   const { fetchTasks, tasks } = useContext(TaskContext);
-  const [filter, setFilter] = useState("This Week");
+  const [filter, setFilter] = useState("This Month");
 
   useEffect(() => {
     if(userDetails){
@@ -33,9 +33,6 @@ function Dashboard() {
   
 
   const categories = ['Backlog', 'Todo', 'In Progress', 'Done'];
-
- 
-  
 
   return (
     <div className="main">
@@ -77,7 +74,7 @@ function Dashboard() {
         </div>
 
         <div className="dashboard-body">
-            <div>
+            <div className="board-header">
                 <h3>Board <img src={addPeopleLogo} alt="" /> <span>Add people</span> </h3>
                 <select value={filter}  onChange={(e) => setFilter(e.target.value)}>
                     <option value="Today">Today</option>
@@ -88,10 +85,12 @@ function Dashboard() {
             <div className="categories-section">
               {categories.map((category, idx) => (
                 <div key={idx} className="category">
-                  <h1>{category}</h1>
-                {tasks.map((task) => task.status === category && (
-                  <TaskCard task={task} key={task._id} />
-                ))}
+                  <div className="category-header"><h3>{category}</h3></div>
+                  <div className="category-body">
+                    {tasks.map((task) => task.status === category && (
+                    <TaskCard task={task} key={task._id} />
+                    ))}
+                  </div>
                 </div>
               ))}
                 
