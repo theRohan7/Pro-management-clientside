@@ -75,8 +75,6 @@ function TaskForm({ onClose }) {
     checklists: checklists,
     dueDate: dueDate
   }
-
-  console.log(data);
   
 
   if (loading) {
