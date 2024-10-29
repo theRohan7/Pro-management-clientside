@@ -62,7 +62,7 @@ function TaskCard({ task }) {
           className="more-options"
           onClick={() => setShowOptions(!showOptions)}
         >
-          <i class="ri-more-fill"></i>
+          <i className="ri-more-fill"></i>
         </span>
         <div
           className="task-options"
@@ -83,9 +83,9 @@ function TaskCard({ task }) {
         {task.checklists.length})
         <button onClick={() => setCollapseChecklist(!collapseChecklist)}>
           {collapseChecklist ? (
-            <i class="ri-arrow-up-s-line"></i>
+            <i className="ri-arrow-up-s-line"></i>
           ) : (
-            <i class="ri-arrow-down-s-line"></i>
+            <i className="ri-arrow-down-s-line"></i>
           )}
         </button>
       </div>

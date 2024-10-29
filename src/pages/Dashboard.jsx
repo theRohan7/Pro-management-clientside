@@ -13,12 +13,15 @@ import '../CSS/Dashboard.css';
 import { TaskContext } from "../contexts/TaskContext.jsx";
 import { useNavigate } from "react-router-dom";
 import TaskCard from "../components/TaskCard.jsx";
+import TaskForm from "./TaskForm.jsx";
+
 
 function Dashboard() {
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
   const { fetchTasks, tasks } = useContext(TaskContext);
   const [filter, setFilter] = useState("This Month");
+  const [addTask, setAddTask] = useState(false);
 
   useEffect(() => {
     if(userDetails){
@@ -27,9 +30,16 @@ function Dashboard() {
       navigate('/login');
     }
 
-  },[userDetails, filter, navigate]);
+  },[userDetails, filter, navigate, fetchTasks]);
 
-  console.log(tasks);
+  const handleAddTask = () => {
+    console.log("add task");
+    setAddTask(true);
+  }
+
+  const handleCloseAddTask = () => {
+    setAddTask(false);
+  }
   
 
   const categories = ['Backlog', 'Todo', 'In Progress', 'Done'];
@@ -90,7 +100,7 @@ function Dashboard() {
                 <div className="category-header">
                   <h3>{category}</h3>
                   <div className="collapse-add">
-                    {category === "Todo" && <i class="ri-add-large-line"></i>}
+                    {category === "Todo" && <i className="ri-add-large-line" onClick={handleAddTask}></i>}
                     <img src={collapseAllLogo} />
                   </div>
                 </div>
@@ -107,6 +117,8 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      {addTask && <TaskForm onClose={handleCloseAddTask} />}
+       
     </div>
   );
 }
