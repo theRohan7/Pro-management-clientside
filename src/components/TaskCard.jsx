@@ -8,6 +8,16 @@ function TaskCard({ task }) {
   const [collapseChecklist, setCollapseChecklist] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
 
+  console.log(task);
+
+  const getInitials = (email) => {
+    return email
+      .split("@")[0]
+      .slice(0, 2)
+      .toUpperCase();
+  };
+  
+
   const formateDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -56,7 +66,7 @@ function TaskCard({ task }) {
                   : "#63C05B",
             }}
           ></div>
-          <span className="task-priority">{task.priority}</span>
+          <span className="task-priority">{task.priority}</span>{task.asignee ? <span className="asignee-avatar" >{getInitials(task.asignee.email)}</span> : '' }
         </div>
         <span
           className="more-options"

@@ -41,6 +41,23 @@
     text-align: left;
 
   }
+
+  .asignee-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #FFEBEB;
+    color: #0c5460;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    font-family: 'Inter';
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: #000000;
+}
   
   .task-header .more-options {
     font-weight: bolder;
