@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../CSS/Taskcard.css";
-import { changeTaskStatus, updateTaskChecklists } from "../services/task";
+import { changeTaskStatus, deleteTask, updateTaskChecklists } from "../services/task";
 import { TaskContext } from "../contexts/TaskContext";
+import toast from "react-hot-toast";
+import TaskForm from "../pages/TaskForm";
 
 function TaskCard({ task }) {
-  const { taskStatus, updateTaskChecklist } = useContext(TaskContext);
+  const { taskStatus, updateTaskChecklist, updateDeleteTask, updateEditedTask } = useContext(TaskContext);
   const [collapseChecklist, setCollapseChecklist] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
-
-  console.log(task);
+  const [isEditing, setIsEditing] = useState(false);
 
   const getInitials = (email) => {
+  
     return email
       .split("@")[0]
       .slice(0, 2)
@@ -44,12 +46,63 @@ function TaskCard({ task }) {
     try {
       const response = await changeTaskStatus(newStatus, taskId);
       if (response.status === 200) {
+        console.log(response.data);
+        
         await taskStatus(response.data.data);
       }
     } catch (error) {
       console.error(error.message);
     }
   };
+
+  const handleEditTask = () => {
+    setIsEditing(true);
+    setShowOptions(false);
+  }
+
+  const handleShareTask = (taskId) => {
+    setShowOptions(false);
+  }
+
+  const handleDeleteTask = async(taskId) => {   
+    try {
+      const response = await deleteTask(taskId);
+      console.log(response.data);
+      
+      if (response.status === 200) {
+        await updateDeleteTask(taskId);
+        setShowOptions(false);
+        toast.success("Task deleted successfully");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+    
+
+  }
+
+
+  if (isEditing) {
+    return (
+      <TaskForm 
+        onClose={() => setIsEditing(false)}
+        isEditing={true}
+        initialData={{
+          _id: task._id,
+          title: task.title,
+          priority: task.priority,
+          asignee: task.asignee?.email,
+          asigneeId: task.asignee?._id,
+          checklists: task.checklists,
+          dueDate: task.dueDate,
+          status: task.status
+        }}
+      />
+    );
+  }
+
+  
+  
 
   return (
     <div className="taskcard">
@@ -66,7 +119,7 @@ function TaskCard({ task }) {
                   : "#63C05B",
             }}
           ></div>
-          <span className="task-priority">{task.priority}</span>{task.asignee ? <span className="asignee-avatar" >{getInitials(task.asignee.email)}</span> : '' }
+          <span className="task-priority">{task.priority}</span>{task.asignee && <span className="asignee-avatar" >{task.asignee?.email && getInitials(task.asignee.email)}</span> }
         </div>
         <span
           className="more-options"
@@ -78,9 +131,9 @@ function TaskCard({ task }) {
           className="task-options"
           style={{ display: showOptions  ? "block" : "none" }}
         >
-          <button>Edit</button> <br />
-          <button>Share</button>
-          <button>Delete</button>
+          <button onClick={() => handleEditTask(task._id)} >Edit</button> <br />
+          <button onClick={() => handleShareTask(task._id)} >Share</button>
+          <button onClick={() => handleDeleteTask(task._id)} >Delete</button>
         </div>
       </div>
       <h3 className="task-title">

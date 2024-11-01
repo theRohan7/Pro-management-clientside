@@ -69,6 +69,7 @@ const updateTaskChecklists = async (checklistIndex, taskId) => {
 
 const editTask = async (task, taskId) => {
     try {
+        
         const token = localStorage.getItem("user-token");
         const response = await axios.post(`${BACKEND_URL}/tasks/edit-task/${taskId}`, {
             ...task

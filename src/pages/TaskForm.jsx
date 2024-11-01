@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { fetchAllUsers } from "../services/user";
 import "../CSS/TaskForm.css";
-import { createTask } from "../services/task";
+import { createTask, editTask } from "../services/task";
+import toast from "react-hot-toast";
+import { TaskContext } from "../contexts/TaskContext";
 
-function TaskForm({ onClose }) {
+function TaskForm({ onClose, isEditing= false, initialData = null }) {
+  
+  
+  const {updateTaskCreated , updateEditedTask} = useContext(TaskContext)
+
   const [allusers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("");
-  const [asignee, setAsignee] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [priority, setPriority] = useState(initialData?.priority || "");
+  const [asignee, setAsignee] = useState(initialData?.asignee || null);
+  const [asigneeId, setAsigneeId] = useState(initialData?.asigneeId || null);
+  const [dueDate, setDueDate] = useState(initialData?.dueDate || "");
   const [error, setError] = useState("");
   const [showAsigneeDropdown, setShowAsigneeDropdown] = useState(false);
-  const [checklists, setChecklists] = useState([
+  const [checklists, setChecklists] = useState(initialData?.checklists || [
     { title: "", completed: false },
   ]);
-  const status = "Todo";
+const [status, setStatus] = useState(initialData?.status || "Todo")
 
   useEffect(() => {
     const getUsers = async () => {
@@ -69,35 +76,51 @@ function TaskForm({ onClose }) {
     setChecklists(checklists.filter((_, idx) => idx !== index));
   };
 
-  const hadnleAssignee = (userId) => {
-    console.log(userId);
+  const hadnleAssignee = (email, asigneeId) => {    
+    setAsignee(email);
+    setAsigneeId(asigneeId);
+    setShowAsigneeDropdown(false);
   };
 
-  const data = {
-    title: title,
-    priority: priority,
-    asignee: asignee,
-    status: status,
-    checklists: checklists,
-    dueDate: dueDate,
-  };
+    
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      const response = await createTask(data);
-      console.log(response.data);
-      if (response.status === 201) {
-        toast.success("Task created successfully");
-        onClose();
+      const data = {
+        title: title,
+        priority: priority,
+        asigneeId: asigneeId,
+        status: status,
+        checklists: checklists,
+        dueDate: dueDate,
+      };
+      let response;
+      if( isEditing) {
+        response = await editTask(data, initialData._id);
+        if(response.status === 200) {
+          await updateEditedTask(response.data.data);
+          toast.success("Task updated successfully");
+          onClose();
+        }
+        
+      } else {
+        response = await createTask(data);
+        if(response.status === 201) {
+          await updateTaskCreated(response.data.data);
+          toast.success("Task created successfully");
+          onClose();
+        }
       }
     } catch (error) {
       console.error(error.message);
       setError(error.message);
     } finally {
       setLoading(false);
+      onClose();
     }
   };
+  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -165,7 +188,7 @@ function TaskForm({ onClose }) {
                   <button
                     type="button"
                     className="assign-btn"
-                    onClick={() => hadnleAssignee(user._id)}
+                    onClick={() => hadnleAssignee(user.email, user._id)}
                   >
                     Assign
                   </button>
