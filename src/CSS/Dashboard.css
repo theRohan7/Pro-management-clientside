@@ -100,6 +100,16 @@
     color: #000000;
 }
 
+.dashboard-header h3 {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    color: #707070 ;
+
+}
+
 .date {
     color: #767575;
 }

@@ -14,6 +14,8 @@ import { TaskContext } from "../contexts/TaskContext.jsx";
 import { useNavigate } from "react-router-dom";
 import TaskCard from "../components/TaskCard.jsx";
 import TaskForm from "./TaskForm.jsx";
+import moment from "moment";
+
 
 
 function Dashboard() {
@@ -32,7 +34,11 @@ function Dashboard() {
 
   },[userDetails, filter, navigate, fetchTasks]);
 
-  
+ 
+
+  const getDate = () => {
+    return moment().format(' Do MMM YYYY');
+  }
   
 
   const handleAddTask = () => {
@@ -88,7 +94,7 @@ function Dashboard() {
       <div className="dashboard">
         <div className="dashboard-header">
           <h2>Welcome! {userDetails?.name} </h2>
-          <h3>Link Copied</h3>
+          <h3>{getDate()}</h3>
         </div>
 
         <div className="dashboard-body">

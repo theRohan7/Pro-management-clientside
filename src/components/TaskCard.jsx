@@ -154,8 +154,8 @@ function TaskCard({ task }) {
         </div>
       </div>
       <h3 className="task-title">
-        {task.title.length > 25
-          ? `${task.title.substring(0, 30)}...`
+        {task.title.length > 2
+          ? `${task.title.substring(0, 20)}...`
           : task.title}
       </h3>
       <div className="checklistsHeader">
