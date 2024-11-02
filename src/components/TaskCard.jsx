@@ -4,6 +4,7 @@ import { changeTaskStatus, deleteTask, updateTaskChecklists } from "../services/
 import { TaskContext } from "../contexts/TaskContext";
 import toast from "react-hot-toast";
 import TaskForm from "../pages/TaskForm";
+import moment from "moment";
 
 function TaskCard({ task }) {
   const { taskStatus, updateTaskChecklist, updateDeleteTask, updateEditedTask } = useContext(TaskContext);
@@ -62,6 +63,7 @@ function TaskCard({ task }) {
   }
 
   const handleShareTask = (taskId) => {
+   navigator.clipboard.writeText(`${window.location.origin}/shared-task/${taskId}`);
     setShowOptions(false);
   }
 
@@ -79,6 +81,22 @@ function TaskCard({ task }) {
       console.error(error.message);
     }
   }
+
+  const getDueDateBackground = (task) => {
+    
+    if (task.status === 'Done') {
+      return '#63C05B';
+    }
+     
+    if (
+      task.priority === 'High Priority' || 
+      (task.dueDate && moment(task.dueDate).isBefore(moment(), 'day'))
+    ) {
+      return '#CF3636'; 
+    }
+    
+    return '#DBDBDB'; 
+  };
 
 
   if (isEditing) {
@@ -169,7 +187,15 @@ function TaskCard({ task }) {
       </div>
 
       <div className="task-footer">
-        <span className="dueDate" style={{ backgroundColor: task.dueDate ? `${task.priority === "High Priority" ? "red" : 'transparent' || Date.now() < task.dueDate ? "red" : 'transparent'} ` : ""}} >{task.dueDate? formateDate(task.dueDate) : ""}</span>
+        {task.dueDate && 
+        <span 
+        className="dueDate"
+        style={{
+          backgroundColor: getDueDateBackground(task)}}
+        >
+          {formateDate(task.dueDate)}
+        </span>
+        }
         <div className="statusButtons">
           {availableStatus().map((status, index) => (
             <button

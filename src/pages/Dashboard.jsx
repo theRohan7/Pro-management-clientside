@@ -32,7 +32,7 @@ function Dashboard() {
 
   },[userDetails, filter, navigate, fetchTasks]);
 
-  console.log(tasks);
+  
   
 
   const handleAddTask = () => {
@@ -42,6 +42,11 @@ function Dashboard() {
 
   const handleCloseAddTask = () => {
     setAddTask(false);
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user-token");
+    navigate('/login');
   }
   
 
@@ -73,7 +78,7 @@ function Dashboard() {
           </div>
 
           <div className="bottom-nav-option">
-            <button type="button" className="logout-btn">
+            <button type="button" className="logout-btn" onClick={handleLogOut}>
               <img src={logoutLogo} alt="" />
               <h4>Log Out</h4>
             </button>

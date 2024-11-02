@@ -266,7 +266,7 @@ function TaskForm({ onClose, isEditing = false, initialData = null }) {
                   setDueDate(date);
                   setShowDatePicker(false);
                 }}
-                inline
+                
               />
             )}
           </div>
