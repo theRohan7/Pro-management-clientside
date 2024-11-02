@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
                 }
             });
 
-            if(response.status === 200){
+            if(response.status === 200){ 
                 setUserDetails({
                     id: response.data.data._id,
                     name: response.data.data.name,

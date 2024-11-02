@@ -16,6 +16,21 @@ const registerUser = async ({ name, email, password }) => {
     }
 }
 
+const userData = async (token) => {
+    try {
+        const response = await axios.get(`${BACKEND_URL}/user/`, {
+            headers: {
+                Authorization: token
+            }
+        });
+
+        return response.data;
+
+    } catch (error) {
+        throw new Error(error.response.data.message)
+    }
+}
+
 const loginUser = async ({ email, password }) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/user/login`, {
@@ -65,7 +80,7 @@ const changePassword = async ({ oldPassword, newPassword }) => {
     }
 }
 
-const updateName = async ({ name }) => {
+const updateName = async (name) => {
     try {
         const token = localStorage.getItem("user-token")
         const response = await axios.put(`${BACKEND_URL}/user/update-name`, {
@@ -82,7 +97,7 @@ const updateName = async ({ name }) => {
     }
 }
 
-const updateEmail = async ({ email }) => {
+const updateEmail = async ( email ) => {
     try {
         const token = localStorage.getItem("user-token")
         const response = await axios.put(`${BACKEND_URL}/user/update-email`, {
@@ -107,5 +122,6 @@ export {
     fetchAllUsers,
     changePassword,
     updateName,
-    updateEmail
+    updateEmail,
+    userData
 }

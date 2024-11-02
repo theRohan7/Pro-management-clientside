@@ -4,11 +4,11 @@ import "../CSS/TaskForm.css";
 import { createTask, editTask } from "../services/task";
 import toast from "react-hot-toast";
 import { TaskContext } from "../contexts/TaskContext";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-function TaskForm({ onClose, isEditing= false, initialData = null }) {
-  
-  
-  const {updateTaskCreated , updateEditedTask} = useContext(TaskContext)
+function TaskForm({ onClose, isEditing = false, initialData = null }) {
+  const { updateTaskCreated, updateEditedTask } = useContext(TaskContext);
 
   const [allusers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,13 +16,14 @@ function TaskForm({ onClose, isEditing= false, initialData = null }) {
   const [priority, setPriority] = useState(initialData?.priority || "");
   const [asignee, setAsignee] = useState(initialData?.asignee || null);
   const [asigneeId, setAsigneeId] = useState(initialData?.asigneeId || null);
-  const [dueDate, setDueDate] = useState(initialData?.dueDate || "");
+  const [dueDate, setDueDate] = useState(initialData?.dueDate || null);
   const [error, setError] = useState("");
   const [showAsigneeDropdown, setShowAsigneeDropdown] = useState(false);
-  const [checklists, setChecklists] = useState(initialData?.checklists || [
-    { title: "", completed: false },
-  ]);
-const [status, setStatus] = useState(initialData?.status || "Todo")
+  const [checklists, setChecklists] = useState(
+    initialData?.checklists || [{ title: "", completed: false }]
+  );
+  const [status, setStatus] = useState(initialData?.status || "Todo");
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -76,13 +77,11 @@ const [status, setStatus] = useState(initialData?.status || "Todo")
     setChecklists(checklists.filter((_, idx) => idx !== index));
   };
 
-  const hadnleAssignee = (email, asigneeId) => {    
+  const hadnleAssignee = (email, asigneeId) => {
     setAsignee(email);
     setAsigneeId(asigneeId);
     setShowAsigneeDropdown(false);
   };
-
-    
 
   const handleSave = async () => {
     try {
@@ -96,17 +95,16 @@ const [status, setStatus] = useState(initialData?.status || "Todo")
         dueDate: dueDate,
       };
       let response;
-      if( isEditing) {
+      if (isEditing) {
         response = await editTask(data, initialData._id);
-        if(response.status === 200) {
+        if (response.status === 200) {
           await updateEditedTask(response.data.data);
           toast.success("Task updated successfully");
           onClose();
         }
-        
       } else {
         response = await createTask(data);
-        if(response.status === 201) {
+        if (response.status === 201) {
           await updateTaskCreated(response.data.data);
           toast.success("Task created successfully");
           onClose();
@@ -120,7 +118,6 @@ const [status, setStatus] = useState(initialData?.status || "Todo")
       onClose();
     }
   };
-  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -217,13 +214,15 @@ const [status, setStatus] = useState(initialData?.status || "Todo")
                   onChange={(e) => handleChecklistChnage(idx, e.target.value)}
                   value={item.title}
                 />
-                <button
-                  type="button"
-                  className="delete-btn"
-                  onClick={() => handleRemoveChecklist(idx)}
-                >
-                  <i className="ri-delete-bin-5-fill"></i>
-                </button>
+                {idx > 0 && (
+                  <button
+                    type="button"
+                    className="delete-btn"
+                    onClick={() => handleRemoveChecklist(idx)}
+                  >
+                    <i className="ri-delete-bin-5-fill"></i>
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -253,12 +252,23 @@ const [status, setStatus] = useState(initialData?.status || "Todo")
 
         <div className="bottom-actions">
           <div>
-            <input
-              type="date"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              className="date-picker"
-            />
+            <button 
+            type="button"
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="date-btn">
+              {dueDate ? dueDate.toLocaleDateString() : "Select Due Date"}
+            </button>
+            {showDatePicker && (
+              <DatePicker
+                selected={dueDate}
+                className="date-picker"
+                onChange={(date) => {
+                  setDueDate(date);
+                  setShowDatePicker(false);
+                }}
+                inline
+              />
+            )}
           </div>
           <div>
             {loading ? (

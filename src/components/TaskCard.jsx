@@ -10,6 +10,7 @@ function TaskCard({ task }) {
   const [collapseChecklist, setCollapseChecklist] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const getInitials = (email) => {
   
@@ -77,8 +78,6 @@ function TaskCard({ task }) {
     } catch (error) {
       console.error(error.message);
     }
-    
-
   }
 
 
@@ -170,7 +169,7 @@ function TaskCard({ task }) {
       </div>
 
       <div className="task-footer">
-        <span className="dueDate">dueDate</span>
+        <span className="dueDate" style={{ backgroundColor: task.dueDate ? `${task.priority === "High Priority" ? "red" : 'transparent' || Date.now() < task.dueDate ? "red" : 'transparent'} ` : ""}} >{task.dueDate? formateDate(task.dueDate) : ""}</span>
         <div className="statusButtons">
           {availableStatus().map((status, index) => (
             <button

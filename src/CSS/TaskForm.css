@@ -286,7 +286,7 @@
 
 .bottom-actions button {
     font-family: Inter;
-    font-size: 20px;
+   
     font-weight: 600;
     line-height: 19px;
     text-align: center;
@@ -295,13 +295,26 @@
     border-radius: 12px;
 }
 
+.date-btn {
+    border: 1px solid #E2E2E2;
+    background-color: transparent;
+    font-family: inter;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 19px;
+    text-align: center;
+    color:  #707070;
+}
+
 .cancel-btn {
     border: 1px solid #CF3636;
+    font-size: 20px;
     color: #CF3636 ;
     background-color: transparent;
 }
 .save-btn {
    background-color:#17A2B8;
+   font-size: 20px;
    color: #ffffff;
    border: none;
 }

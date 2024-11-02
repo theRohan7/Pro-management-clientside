@@ -32,6 +32,9 @@ function Dashboard() {
 
   },[userDetails, filter, navigate, fetchTasks]);
 
+  console.log(tasks);
+  
+
   const handleAddTask = () => {
     console.log("add task");
     setAddTask(true);
@@ -55,17 +58,17 @@ function Dashboard() {
           <div className="top-nav-option">
             <div className="option">
               <img src={layoutLogo} alt="" />
-              <h4>Board</h4>
+              <h4 onClick={() => navigate('/')} >Board</h4>
             </div>
 
             <div className="option">
               <img src={analyticsLogo} alt="" />
-              <h4>Analytics</h4>
+              <h4 onClick={() => navigate('/analytics')} >Analytics</h4>
             </div>
 
             <div className="option">
               <img src={settingsLogo} alt="" />
-              <h4>Settings</h4>
+              <h4 onClick={() => navigate('/settings')} >Settings</h4>
             </div>
           </div>
 
