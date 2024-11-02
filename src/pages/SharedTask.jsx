@@ -47,7 +47,7 @@ function SharedTask() {
     return <div>loading...</div>;
   }
 
-  console.log(task);
+  // console.log(task);
   
   return (
     <div className="main-body">
@@ -80,7 +80,7 @@ function SharedTask() {
             <div className="checklist">
               {task.checklists.map((item, idx) => (
                 <div key={idx} className="checklistItem">
-                  <input type="checkbox" checked={item.completed} />
+                  <input type="checkbox" checked={item.completed} readOnly />
                   <label>{item.title}</label>
                 </div>
               ))}
